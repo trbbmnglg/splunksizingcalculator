@@ -27,16 +27,29 @@ describe('computeSizing', () => {
     expect(result.eventsPerDay).toBe(288000);
   });
 
-  it('applies API overhead (25%)', () => {
+  it('license volume equals raw data (no overhead)', () => {
     const result = computeSizing(defaults);
-    expect(result.overheadPercent).toBe(25.0);
-    expect(result.licenseVolumeMb).toBeCloseTo(result.dailyRawMbBase * 1.25, 4);
+    expect(result.licenseVolumeMb).toBeCloseTo(result.dailyRawMbBase, 4);
   });
 
-  it('applies UF overhead (12.11%)', () => {
+  it('planned volume includes API buffer (25%)', () => {
+    const result = computeSizing(defaults);
+    expect(result.overheadPercent).toBe(25.0);
+    expect(result.plannedVolumeMb).toBeCloseTo(result.dailyRawMbBase * 1.25, 4);
+  });
+
+  it('planned volume includes UF buffer (12.11%)', () => {
     const result = computeSizing({ ...defaults, ingestionMethod: 'uf' });
     expect(result.overheadPercent).toBe(12.11);
-    expect(result.licenseVolumeMb).toBeCloseTo(result.dailyRawMbBase * 1.1211, 4);
+    expect(result.plannedVolumeMb).toBeCloseTo(result.dailyRawMbBase * 1.1211, 4);
+  });
+
+  it('storage is derived from planned volume, not license volume', () => {
+    const result = computeSizing(defaults);
+    const expectedRaw = result.plannedVolumeMb * 0.15 * defaults.replicationFactor;
+    const expectedMeta = result.plannedVolumeMb * 0.35 * defaults.searchFactor;
+    expect(result.storageRawMb).toBeCloseTo(expectedRaw, 4);
+    expect(result.storageMetaMb).toBeCloseTo(expectedMeta, 4);
   });
 
   it('handles zero interval by clamping to 1', () => {

@@ -364,13 +364,23 @@ export default function App() {
                       <span className="font-bold text-blue-600">{metrics.licenseVolumeMb.toFixed(1)} MB</span>
                     </div>
                     <p className="text-xs text-slate-500">
-                      Converted from KB to MB, including {metrics.overheadPercent}% sizing buffer/overhead.
+                      Raw event data converted from KB to MB. Splunk meters license on raw event bytes only.
+                    </p>
+                  </div>
+
+                  <div className="border-t border-slate-100 pt-4">
+                    <div className="flex justify-between text-sm mb-1">
+                      <span className="font-medium text-slate-700">4. Planned Volume (with buffer)</span>
+                      <span className="font-bold text-slate-900">{metrics.plannedVolumeMb.toFixed(1)} MB</span>
+                    </div>
+                    <p className="text-xs text-slate-500">
+                      License volume + {metrics.overheadPercent}% planning buffer for data expansion during parsing (field extraction, linebreaking).
                     </p>
                   </div>
 
                   <div className="border-t border-slate-100 pt-4">
                     <div className="flex justify-between text-sm mb-3">
-                      <span className="font-medium text-slate-700">4. Physical Storage Required</span>
+                      <span className="font-medium text-slate-700">5. Physical Storage Required</span>
                       <span className="font-bold text-slate-900">{metrics.dailyStorageTotalMb.toFixed(1)} MB / day</span>
                     </div>
                     <div className="h-4 w-full bg-slate-100 flex overflow-hidden mb-2" role="img" aria-label={`Raw: ${metrics.storageRawMb.toFixed(1)} MB, Metadata: ${metrics.storageMetaMb.toFixed(1)} MB`}>

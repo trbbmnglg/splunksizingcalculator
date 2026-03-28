@@ -7,7 +7,9 @@ export const INGESTION_METHODS = {
   UF: 'uf',
 };
 
-export const INGESTION_OVERHEAD = {
+// Planning buffer for data expansion during parsing (field extraction, linebreaking, etc.)
+// This inflates storage estimates, NOT license metering — Splunk meters raw event bytes only.
+export const INGESTION_BUFFER = {
   [INGESTION_METHODS.API]: 25.0,
   [INGESTION_METHODS.UF]: 12.11,
 };

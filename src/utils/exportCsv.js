@@ -22,6 +22,7 @@ export function exportToCSV(inputs, metrics) {
     csvRow('Replication Factor (RF)', inputs.replicationFactor),
     csvRow('Search Factor (SF)', inputs.searchFactor),
     csvRow('Daily License Volume (MB)', metrics.licenseVolumeMb.toFixed(2)),
+    csvRow('Daily Planned Volume incl. Buffer (MB)', metrics.plannedVolumeMb.toFixed(2)),
     csvRow('Daily Physical Storage (MB)', metrics.dailyStorageTotalMb.toFixed(2)),
     csvRow('Monthly License Volume (GB)', metrics.monthlyLicenseVolumeGb.toFixed(2)),
     csvRow('Monthly Physical Storage (GB)', metrics.monthlyStorageTotalGb.toFixed(2)),

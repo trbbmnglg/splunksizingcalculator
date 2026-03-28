@@ -1,4 +1,4 @@
-import { MINUTES_PER_DAY, INGESTION_OVERHEAD, INGESTION_METHODS } from './constants';
+import { MINUTES_PER_DAY, INGESTION_BUFFER, INGESTION_METHODS } from './constants';
 
 export function computeSizing({
   events,
@@ -14,7 +14,7 @@ export function computeSizing({
   hotWarmDays,
   peakMultiplier,
 }) {
-  const overheadPercent = INGESTION_OVERHEAD[ingestionMethod] ?? INGESTION_OVERHEAD[INGESTION_METHODS.API];
+  const overheadPercent = INGESTION_BUFFER[ingestionMethod] ?? INGESTION_BUFFER[INGESTION_METHODS.API];
   const safeInterval = Math.max(1, intervalMinutes);
   const safeEvents = Math.max(0, events);
 
@@ -24,11 +24,14 @@ export function computeSizing({
   const dailyRawKbBase = payloadSizeKb * intervalsPerDay * peakMultiplier;
   const dailyRawMbBase = dailyRawKbBase / 1024;
 
-  const licenseVolumeMb = dailyRawMbBase * (1 + overheadPercent / 100);
+  // License = raw event data only (what Splunk actually meters)
+  const licenseVolumeMb = dailyRawMbBase;
   const licenseVolumeGb = licenseVolumeMb / 1024;
 
-  const storageRawMb = licenseVolumeMb * (rawStoragePercent / 100) * replicationFactor;
-  const storageMetaMb = licenseVolumeMb * (metaStoragePercent / 100) * searchFactor;
+  // Storage = apply planning buffer for data expansion, then compression/index ratios
+  const plannedVolumeMb = dailyRawMbBase * (1 + overheadPercent / 100);
+  const storageRawMb = plannedVolumeMb * (rawStoragePercent / 100) * replicationFactor;
+  const storageMetaMb = plannedVolumeMb * (metaStoragePercent / 100) * searchFactor;
   const dailyStorageTotalMb = storageRawMb + storageMetaMb;
   const dailyStorageTotalGb = dailyStorageTotalMb / 1024;
 
@@ -53,6 +56,7 @@ export function computeSizing({
     dailyRawMbBase,
     licenseVolumeMb,
     licenseVolumeGb,
+    plannedVolumeMb,
     storageRawMb,
     storageMetaMb,
     dailyStorageTotalMb,
