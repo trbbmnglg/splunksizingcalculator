@@ -1,8 +1,7 @@
-import React from 'react';
 import InlineHelp from './InlineHelp';
 
 const INPUT_CLASS =
-  'w-full px-4 py-2 bg-slate-50 border border-slate-200 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors outline-none';
+  'w-full px-3.5 py-2 bg-white border border-accenture-gray-light text-black focus:ring-1 focus:ring-accenture-purple focus:border-accenture-purple transition-colors outline-none';
 
 export default function NumberInput({
   label,
@@ -24,7 +23,7 @@ export default function NumberInput({
     <div className={`relative ${isActive ? 'z-40' : 'z-10'}`}>
       <label
         htmlFor={`input-${field}`}
-        className="block text-sm font-medium text-slate-600 mb-1"
+        className="block text-sm font-medium text-accenture-gray-dark mb-1.5"
       >
         {label}
       </label>
@@ -40,7 +39,7 @@ export default function NumberInput({
         step={step}
         readOnly={readOnly}
         aria-describedby={`help-${field}`}
-        className={`${INPUT_CLASS} ${readOnly ? 'bg-slate-100 text-slate-500 cursor-not-allowed focus:ring-0 focus:border-slate-200' : ''} ${extraClass}`}
+        className={`${INPUT_CLASS} ${readOnly ? 'bg-accenture-gray-off-white text-accenture-gray-dark cursor-not-allowed focus:ring-0 focus:border-accenture-gray-light' : ''} ${extraClass}`}
       />
       <InlineHelp field={field} isActive={isActive} />
     </div>

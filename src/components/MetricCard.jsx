@@ -1,27 +1,25 @@
-import React from 'react';
-
+// Accenture brand metric tiles — solid fills (no gradients per brand guide),
+// sharp corners, white text on dark purple/black, or black text on light.
 const COLOR_SCHEMES = {
-  blue:    { gradient: 'from-cyan-500 to-blue-600',    border: 'border-blue-400',    shadow: 'hover:shadow-blue-500/20',    light: 'text-blue-100',    lighter: 'text-blue-200' },
-  purple:  { gradient: 'from-purple-500 to-fuchsia-600', border: 'border-fuchsia-400', shadow: 'hover:shadow-fuchsia-500/20', light: 'text-fuchsia-100', lighter: 'text-fuchsia-200' },
-  rose:    { gradient: 'from-orange-400 to-rose-500',  border: 'border-rose-400',    shadow: 'hover:shadow-rose-500/20',    light: 'text-rose-100',    lighter: 'text-rose-200' },
-  emerald: { gradient: 'from-teal-400 to-emerald-600', border: 'border-emerald-400', shadow: 'hover:shadow-emerald-500/20', light: 'text-emerald-100', lighter: 'text-emerald-200' },
+  'purple':          { bg: 'bg-accenture-purple',          text: 'text-white', icon: 'text-white/80',              subtitle: 'text-white/85' },
+  'purple-dark':     { bg: 'bg-accenture-purple-dark',     text: 'text-white', icon: 'text-white/80',              subtitle: 'text-white/85' },
+  'purple-darkest':  { bg: 'bg-accenture-purple-darkest',  text: 'text-white', icon: 'text-accenture-purple-light', subtitle: 'text-accenture-purple-light' },
+  'black':           { bg: 'bg-black',                     text: 'text-white', icon: 'text-accenture-purple-light', subtitle: 'text-accenture-gray-light' },
 };
 
 export default function MetricCard({ title, value, unit, subtitle, icon: Icon, colorScheme }) {
-  const c = COLOR_SCHEMES[colorScheme];
+  const c = COLOR_SCHEMES[colorScheme] || COLOR_SCHEMES['purple'];
 
   return (
-    <div
-      className={`bg-gradient-to-br ${c.gradient} p-6 shadow-sm text-white border ${c.border} transition-all duration-300 hover:-translate-y-1 hover:shadow-lg ${c.shadow}`}
-    >
+    <div className={`${c.bg} ${c.text} p-6 border border-transparent transition-all duration-300 hover:-translate-y-1`}>
       <div className="flex items-center justify-between mb-2">
-        <h3 className={`font-medium ${c.light}`}>{title}</h3>
-        <Icon className={`w-5 h-5 ${c.lighter}`} aria-hidden="true" />
+        <h3 className="font-medium text-sm tracking-tight opacity-90">{title}</h3>
+        <Icon className={`w-5 h-5 ${c.icon}`} aria-hidden="true" />
       </div>
-      <div className="text-4xl font-bold tracking-tight mb-1">
-        {value} <span className={`text-xl ${c.lighter} font-medium`}>{unit}</span>
+      <div className="text-4xl font-semibold tracking-tight mb-1">
+        {value} <span className="text-xl font-medium opacity-85">{unit}</span>
       </div>
-      <div className={`text-sm ${c.light}`}>{subtitle}</div>
+      <div className={`text-sm ${c.subtitle}`}>{subtitle}</div>
     </div>
   );
 }
