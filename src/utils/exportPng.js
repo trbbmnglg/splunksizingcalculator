@@ -1,30 +1,14 @@
-let loadPromise = null;
-
-function loadHtml2Canvas() {
-  if (window.html2canvas) return Promise.resolve();
-  if (loadPromise) return loadPromise;
-
-  loadPromise = new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = 'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js';
-    script.integrity = 'sha512-s/XK4vYVX0ieiZxt4ezGCLlSiiTfIBUZp1vr6k1sHQhTOC/MYni/YTud9mmZ8iaQqnTVMXLfW0I7suKCYfCzw==';
-    script.crossOrigin = 'anonymous';
-    script.onload = resolve;
-    script.onerror = () => {
-      loadPromise = null;
-      reject(new Error('Failed to load html2canvas'));
-    };
-    document.head.appendChild(script);
-  });
-
-  return loadPromise;
-}
-
+// Dynamic import keeps html2canvas (~230 KB gzipped) out of the initial bundle
+// — it loads on first PNG export click. Replaces a prior CDN script-tag loader
+// so the app ships self-contained (no external script-src, no stale pin).
 export async function exportToPNG(element) {
-  await loadHtml2Canvas();
+  const mod = await import('html2canvas');
+  const html2canvas = mod.default || mod;
 
-  const canvas = await window.html2canvas(element, {
-    backgroundColor: '#f8fafc',
+  const canvas = await html2canvas(element, {
+    // Accenture gray-off-white — matches the in-app panel backdrop so the
+    // exported image doesn't show a foreign slate/white edge.
+    backgroundColor: '#F1F1EF',
     scale: 2,
     logging: false,
     useCORS: true,

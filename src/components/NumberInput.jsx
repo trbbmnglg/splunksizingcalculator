@@ -39,7 +39,7 @@ export default function NumberInput({
         step={step}
         readOnly={readOnly}
         aria-describedby={`help-${field}`}
-        className={`${INPUT_CLASS} ${readOnly ? 'bg-accenture-gray-off-white text-accenture-gray-dark cursor-not-allowed focus:ring-0 focus:border-accenture-gray-light' : ''} ${extraClass}`}
+        className={`${INPUT_CLASS} ${readOnly ? 'bg-accenture-gray-off-white text-accenture-gray-dark cursor-not-allowed focus:ring-1 focus:ring-accenture-gray-dark focus:border-accenture-gray-dark' : ''} ${extraClass}`}
       />
       <InlineHelp field={field} isActive={isActive} />
     </div>

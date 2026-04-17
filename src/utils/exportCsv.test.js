@@ -1,3 +1,4 @@
+// @vitest-environment jsdom
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { exportToCSV } from './exportCsv';
 
@@ -35,6 +36,7 @@ describe('exportToCSV', () => {
     };
     const metrics = {
       licenseVolumeMb: { toFixed: () => '1.00' },
+      plannedVolumeMb: { toFixed: () => '1.25' },
       dailyStorageTotalMb: { toFixed: () => '2.00' },
       monthlyLicenseVolumeGb: { toFixed: () => '3.00' },
       monthlyStorageTotalGb: { toFixed: () => '4.00' },

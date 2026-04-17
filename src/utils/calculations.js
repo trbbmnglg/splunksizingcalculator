@@ -19,6 +19,10 @@ export function computeSizing({
   const safeEvents = Math.max(0, events);
 
   const intervalsPerDay = MINUTES_PER_DAY / safeInterval;
+  // eventsPerDay is for the "Events captured" display only — none of the
+  // sizing math uses it. Volume is driven entirely by payloadSizeKb, which
+  // App.jsx keeps synchronized with the events count (handleEventsChange
+  // rescales payload proportionally so user intent still flows through).
   const eventsPerDay = safeEvents * intervalsPerDay;
 
   const dailyRawKbBase = payloadSizeKb * intervalsPerDay * peakMultiplier;
