@@ -2,7 +2,33 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Accenture Branding Guidelines July 2025 v4 — base styles. */
+/* Accenture Branding Guidelines July 2025 v4 — base styles.
+   Primary: Graphik  |  Accent serif: GT Sectra Fine (editorial display) */
+
+@font-face {
+  font-family: 'GT Sectra';
+  src: url('./assets/fonts/gt-sectra/GT-Sectra-Fine-Regular.woff2') format('woff2'),
+       url('./assets/fonts/gt-sectra/GT-Sectra-Fine-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'GT Sectra';
+  src: url('./assets/fonts/gt-sectra/GT-Sectra-Fine-Medium.woff2') format('woff2'),
+       url('./assets/fonts/gt-sectra/GT-Sectra-Fine-Medium.woff') format('woff');
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'GT Sectra';
+  src: url('./assets/fonts/gt-sectra/GT-Sectra-Fine-Bold.woff2') format('woff2'),
+       url('./assets/fonts/gt-sectra/GT-Sectra-Fine-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
 
 :root {
   font-family: 'Graphik', 'Graphik Web', ui-sans-serif, system-ui,

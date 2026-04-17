@@ -1,5 +1,5 @@
 import { useRef, useState, useCallback } from 'react';
-import { Calculator, Server, Database, Download, Camera } from 'lucide-react';
+import { Server, Database, Download, Camera } from 'lucide-react';
 
 import MetricCard from './components/MetricCard';
 import ExportButton from './components/ExportButton';
@@ -61,14 +61,11 @@ export default function App() {
       <div className="min-h-screen bg-accenture-gray-off-white text-black p-4 md:p-10">
         <div className="max-w-6xl mx-auto space-y-8">
 
-          <header className="flex items-center gap-3 pb-6 border-b border-accenture-gray-light">
-            <div className="p-3 bg-accenture-purple">
-              <Calculator className="w-6 h-6 text-white" aria-hidden="true" />
-            </div>
-            <div>
-              <h1 className="text-2xl font-semibold tracking-tight text-black">Splunk sizing calculator</h1>
-              <p className="text-sm text-accenture-gray-dark">Enterprise estimation tool</p>
-            </div>
+          <header className="pb-6 border-b border-accenture-gray-light">
+            <h1 className="font-sectra text-4xl md:text-5xl font-normal leading-[1.1] tracking-tight text-black">
+              Splunk Sizing Calculator
+            </h1>
+            <p className="mt-2 text-sm text-accenture-gray-dark">Enterprise estimation tool</p>
           </header>
 
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
